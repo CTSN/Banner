@@ -1,0 +1,87 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+img {
+    margin: 0px;
+}
+
+ul, ol {
+    list-style: none
+}
+
+.all {
+    width: 730px;
+    height: 454px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    margin: 100px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.box {
+    position: absolute;
+    width: 730px;
+    height: 454px;
+    overflow: hidden;
+}
+
+.box ul {
+    position: absolute;
+    left: -730px;
+    top: 0;
+}
+
+.box ul li {
+    float: left;
+    overflow: hidden;
+}
+
+.box ol {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+}
+
+.box ol li {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    float: left;
+    font-size: 13px;
+    margin-right: 10px;
+    border-radius: 9px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.box .current {
+    background-color: #C81623;
+    color: #fff;
+}
+.slide{
+    display: none;
+}
+.arrow{
+    position: absolute;
+    width: 30px;
+    height: 70px;
+    top: 50%;
+    line-height: 70px;
+    font-family: "宋体";
+    background: rgba(0,0,0,0.25);
+    margin-top: -40px;
+    color: #fff;
+    text-align: center;
+}
+.arrow_left{
+    left: 0;
+}
+.arrow_right{
+    right: 0;
+}
+.arrow:hover{
+    background: rgba(0,0,0,0.5);
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        function animate(obj, target) {
+            clearInterval(obj.timer);
+            var leader = obj.offsetLeft < target ? 50 : -50;
+            obj.timer = setInterval(function () {
+
+                var result = target - obj.offsetLeft;
+                obj.style.left = obj.offsetLeft + leader + "px"
+
+                if (Math.abs(result) < 50) {
+                    clearInterval(obj.timer);
+                    obj.style.left = target + "px";
+                }
+            }, 10);
+        }
+
+
+
+        window.onload = function () {
+            function $id(id) {
+                return document.getElementById(id);
+            }
+
+            var box = $id("box");
+            var slide = $id("slide");
+            var left = slide.children[0];
+            var right = slide.children[1];
+            var imgUl = box.children[0];
+            var circleOl = box.children[1];
+            var index = 1;
+            var square = 0;
+            var circleList;
+            initView();
+            initClick();
+
+            function initView() {
+
+                imgUl.appendChild(imgUl.children[0].cloneNode(true));
+                imgUl.insertBefore(imgUl.children[4].cloneNode(true),imgUl.children[0]);
+                var imgUlWidth = imgUl.children[0].offsetWidth * imgUl.children.length;
+                imgUl.style.width = imgUlWidth + "px";
+
+                for (var i = 0; i < imgUl.children.length - 2; i++) {
+                    var li = document.createElement("li");
+                    li.index = i;
+                    li.innerHTML = i+1;
+                    circleOl.appendChild(li);
+                }
+
+                circleList = circleOl.children;
+                circleOl.style.marginLeft = -(circleOl.offsetWidth / 2) + "px";
+            }
+
+            var timer = setInterval(play,4000);
+
+            function play() {
+                index++;
+                square++;
+                if(index>imgUl.children.length-1){
+                    imgUl.style.left = -(box.offsetWidth)+"px";
+                    index = 2;
+                }
+
+                if(square > circleList.length -1){
+                    square = 0;
+                }
+                for(var i=0;i<circleList.length;i++){
+                    circleList[i].className = "";
+                }
+                circleList[square].className = "current";
+
+                var target = -index *box.offsetWidth;
+                animate(imgUl,target);
+            }
+
+            function initClick() {
+                for (var i = 0; i < circleList.length; i++) {
+                    circleOl.children[i].onmouseover = function () {
+
+                        for (var j = 0;j<circleList.length;j++){
+                            circleOl.children[j].className = "";
+                        }
+
+                        circleList[this.index].className = "current";
+                        var target = -(this.index+1) * box.offsetWidth;
+                        animate(imgUl, target);
+
+                        square = this.index;
+                        index = this.index+1;
+                    }
+                }
+
+                circleOl.children[0].className = "current";
+
+                box.onmouseover = function () {
+                    clearInterval(timer);
+                    slide.style.display = "block";
+                }
+                box.onmouseout = function () {
+                    timer = setInterval(play,4000);
+                    slide.style.display = "none";
+                }
+
+                right.onclick = function () {
+                    play();
+                }
+
+                left.onclick = function () {
+                    index--;
+                    square--;
+                    if(index<0){
+                        imgUl.style.left = -(box.offsetWidth*5)+"px";
+                        index = imgUl.children.length-3;
+                    }
+                    if (square <0){
+                        square = 4;
+                    }
+
+                    for(var i=0;i<circleList.length;i++){
+                        circleList[i].className = "";
+                    }
+                    circleList[square].className = "current";
+
+                    var target = -index *box.offsetWidth;
+                    animate(imgUl,target);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="all">
+    <div class="box" id="box">
+        <ul>
+            <li><a href="#"><img src="image/11.jpg" alt=""></a></li>
+            <li><a href="#"><img src="image/22.jpg" alt=""></a></li>
+            <li><a href="#"><img src="image/33.jpg" alt=""></a></li>
+            <li><a href="#"><img src="image/44.jpg" alt=""></a></li>
+            <li><a href="#"><img src="image/55.jpg" alt=""></a></li>
+        </ul>
+        <ol></ol>
+        <div class="slide" id="slide">
+            <div class="arrow arrow_left" id="arrow_left"><</div>
+            <div class="arrow arrow_right" id="arrow_right">></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
