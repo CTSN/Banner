@@ -62,7 +62,7 @@ ul, ol {
     color: #fff;
 }
 .slide{
-    display: none;
+    display: block;
 }
 .arrow{
     position: absolute;
